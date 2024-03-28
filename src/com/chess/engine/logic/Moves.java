@@ -99,11 +99,10 @@ public abstract class Moves {
                 builder.setPiece(piece);
             }
         }
-
         
         for (Piece piece : this.board.currentPlayer().getOpponent().getCurrentActivePieces()){
                 builder.setPiece(piece);
-        }
+        } 
         
         builder.setPiece(this.movedPiece.movePiece(this));// moving the piece 
         builder.setNextMove(this.board.currentPlayer().getOpponent().getUtilities());

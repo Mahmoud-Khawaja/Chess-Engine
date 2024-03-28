@@ -35,4 +35,12 @@ public abstract class Square {
     public String toString() {
         return ".";
     }
+
+
+    public int getSqaureCoordinatesX() {
+        return this.x;
+    }
+    public int getSqaureCoordinatesY() {
+        return this.y;
+    }
 }

@@ -2,6 +2,7 @@ package com.chess.engine.pieces;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import com.chess.engine.board.Board;
 import com.chess.engine.board.Square;
