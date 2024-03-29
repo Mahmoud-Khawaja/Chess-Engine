@@ -45,5 +45,8 @@ public class Transition {
         return this.moveStatus;
     }
 
+    public Board getTransitionBoard(){
+        return this.transitionBoard;
+    }
     // Consider adding getters for transitionBoard and move if needed
 }

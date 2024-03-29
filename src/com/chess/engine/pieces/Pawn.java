@@ -46,11 +46,11 @@ public class Pawn extends Piece {
         int pawnStartRow = this.getPieceUtility().isWhite() ? 1 : 6;
 
         // Handle the initial double move
-        if (x == pawnStartRow) {
-            int twoStepForward = x + (2 * pawnMoveDirection);
-            Square squareTwoStep = board.getSquare(twoStepForward, y);
+        if (y == pawnStartRow) {
+            int twoStepForward = y + (2 * pawnMoveDirection);
+            Square squareTwoStep = board.getSquare(x, twoStepForward);
             if(!squareTwoStep.isOccupied()) {
-                legalMove.add(new NormalMove(board, this, twoStepForward, y));
+                legalMove.add(new NormalMove(board, this, x, twoStepForward));
             }
         }
 

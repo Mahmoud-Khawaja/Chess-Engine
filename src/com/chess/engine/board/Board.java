@@ -90,8 +90,8 @@ public class Board {
         builder.setPiece(new Rook(0, 0, Utilities.WHITE));
         builder.setPiece(new Knight(0, 1, Utilities.WHITE));
         builder.setPiece(new Bishop(0, 2, Utilities.WHITE));
-        builder.setPiece(new Queen(0, 3, Utilities.WHITE));
-        builder.setPiece(new King(0, 4, Utilities.WHITE));
+        builder.setPiece(new Queen(0, 3, Utilities.WHITE)); // Place on e1
+        builder.setPiece(new King(0, 4, Utilities.WHITE));  // Place on d1
         builder.setPiece(new Bishop(0, 5, Utilities.WHITE));
         builder.setPiece(new Knight(0, 6, Utilities.WHITE));
         builder.setPiece(new Rook(0, 7, Utilities.WHITE));
@@ -103,8 +103,8 @@ public class Board {
         builder.setPiece(new Rook(7, 0, Utilities.BLACK));
         builder.setPiece(new Knight(7, 1, Utilities.BLACK));
         builder.setPiece(new Bishop(7, 2, Utilities.BLACK));
-        builder.setPiece(new Queen(7, 3, Utilities.BLACK));
-        builder.setPiece(new King(7, 4, Utilities.BLACK));
+        builder.setPiece(new Queen(7, 3, Utilities.BLACK)); // Place on e8
+        builder.setPiece(new King(7, 4, Utilities.BLACK));  // Place on d8
         builder.setPiece(new Bishop(7, 5, Utilities.BLACK));
         builder.setPiece(new Knight(7, 6, Utilities.BLACK));
         builder.setPiece(new Rook(7, 7, Utilities.BLACK));
