@@ -7,7 +7,7 @@ import com.chess.engine.player.WhitePlayer;
 public enum Utilities {
     WHITE {
         @Override
-        public int Directions() {
+        public int direction() {
             return -1;
         }
 
@@ -22,14 +22,14 @@ public enum Utilities {
         }
 
         @Override
-        public Player choosePlayer(final WhitePlayer whitePlayer,final BlackPlayer blackPlayer) {
+        public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
             return whitePlayer;
         }   
     },
 
     BLACK {
         @Override
-        public int Directions() {
+        public int direction() {
             return 1;
         }
 
@@ -44,14 +44,13 @@ public enum Utilities {
         }
 
         @Override
-        public Player choosePlayer(final WhitePlayer whitePlayer, BlackPlayer blackPlayer) {
+        public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
             return blackPlayer;
         }
     };
 
-    public abstract int Directions();
+    public abstract int direction();
     public abstract boolean isWhite();
     public abstract boolean isBlack();
     public abstract Player choosePlayer(WhitePlayer whitePlayer, BlackPlayer blackPlayer);
-
 }

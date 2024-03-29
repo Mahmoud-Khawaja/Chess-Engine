@@ -8,47 +8,43 @@ import com.chess.engine.board.Square;
 import com.chess.engine.logic.AttackingMove;
 import com.chess.engine.logic.Moves;
 import com.chess.engine.logic.NormalMove;
-
 public class Rook extends Piece {
 
     public Rook(int x, int y, Utilities pieceUtilities) {
-        super(x, y, pieceUtilities,PieceType.ROOK);
+        super(x, y, pieceUtilities, PieceType.ROOK);
     }
-    private void calcuateAllDircestions(Board board,List<Moves> legalMove, int x, int y,int addX, int addY) {
-        while(true){
-            if(board.isValidCoordiante(x+addX, y+addY)){
-                Square square = board.getSqaure(x+addX, y+addY);
-                if(!square.isOccupied()){ 
-                    legalMove.add(new NormalMove(board, this, x+addX, y+addY));
+
+    private void calculateAllDirections(final Board board, final List<Moves> legalMoves, int x, int y, int xDirectionIncrement, int yDirectionIncrement) {
+        while(board.isValidCoordinate(x + xDirectionIncrement, y + yDirectionIncrement)) {
+            int newX = x + xDirectionIncrement;
+            int newY = y + yDirectionIncrement;
+            Square square = board.getSquare(newX, newY);
+            if(!square.isOccupied()) {
+                legalMoves.add(new NormalMove(board, this, newX, newY));
+            } else {
+                Piece pieceAtLocation = square.getPiece();
+                if(!this.pieceUtilities.equals(pieceAtLocation.getPieceUtility())) {
+                    legalMoves.add(new AttackingMove(board, this, newX, newY, pieceAtLocation));
                 }
-                else {
-                    Piece pieceAtlocation = square.getPiece();
-                    if(this.pieceUtilities!=pieceAtlocation.pieceUtilities){
-                        legalMove.add(new AttackingMove(board, pieceAtlocation, x+addX, y+addY, pieceAtlocation));
-                    }
-                    break;
-                }
-            }else {
                 break;
             }
-            x = x+addX;
-            y = y+addY;
+            x = newX;
+            y = newY;
         }
     }
+
     @Override
     public List<Moves> calculateMoves(Board board) {
-        List<Moves> legalMove = new ArrayList<>();
-        int x = this.x;
-        int y = this.y;
+        List<Moves> legalMoves = new ArrayList<>();
+        // Horizontal and vertical moves
+        calculateAllDirections(board, legalMoves, this.x, this.y, 1, 0);
+        calculateAllDirections(board, legalMoves, this.x, this.y, -1, 0);
+        calculateAllDirections(board, legalMoves, this.x, this.y, 0 , 1);
+        calculateAllDirections(board, legalMoves, this.x, this.y, 0 , -1);
 
-        calcuateAllDircestions(board, legalMove, x, y, 1, 0);
-        calcuateAllDircestions(board, legalMove, x, y, -1, 0);
-        calcuateAllDircestions(board, legalMove, x, y, 0 , 1);
-        calcuateAllDircestions(board, legalMove, x, y, 0 , -1);
-        
-        return legalMove;
+        return legalMoves;
     }
-    
+
     @Override
     public Rook movePiece(Moves move) {
         return new Rook(move.getXPosition(), move.getYPosition(), move.getMovedPiece().getPieceUtility());
@@ -58,5 +54,4 @@ public class Rook extends Piece {
     public String toString() {
         return PieceType.ROOK.toString();
     }
-
 }

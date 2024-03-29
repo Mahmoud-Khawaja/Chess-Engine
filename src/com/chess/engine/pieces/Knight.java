@@ -8,51 +8,46 @@ import com.chess.engine.board.Square;
 import com.chess.engine.logic.AttackingMove;
 import com.chess.engine.logic.Moves;
 import com.chess.engine.logic.NormalMove;
-
 public class Knight extends Piece {
 
-    private static final int[] MOVES_COORDINATES_X_AXIS = {2,1,-1,-2,-2,-1,1,2};
-    private static final int[] MOVES_COORDINATES_Y_AXIS = {1,2,2,-1,-1,-2,-2,-1};
+    private static final int[] KNIGHT_MOVES_X = {2, 1, -1, -2, -2, -1, 1, 2};
+    private static final int[] KNIGHT_MOVES_Y = {1, 2, 2, -1, -1, -2, -2, -1};
 
     public Knight(int x, int y, Utilities pieceUtilities) {
-        super(x,y, pieceUtilities,PieceType.KNIGHT);
+        super(x, y, pieceUtilities, PieceType.KNIGHT);
     }
- 
+
     @Override
     public List<Moves> calculateMoves(final Board board) {
+        final List<Moves> legalMoves = new ArrayList<>();
 
-        final List<Moves> legalMove = new ArrayList<>(); 
-
-        for(int i = 0; i < 8; i++) {
-            int x = this.x + MOVES_COORDINATES_X_AXIS[i]; 
-            int y = this.y + MOVES_COORDINATES_Y_AXIS[i];
-            if(board.isValidCoordiante(x, y)){
-                 final Square ourDistination = board.getSqaure(x,y);
-                 if(!ourDistination.isOccupied()){
-                    legalMove.add(new NormalMove(board,this, x,y));
-                 } else {
-                    final Piece pieceAtlocation = ourDistination.getPiece();
-                    final Utilities pieceutil = pieceAtlocation.getPieceUtility();
-                        if(this.pieceUtilities != pieceutil){
-                        legalMove.add(new AttackingMove(board,this,x,y,pieceAtlocation));
+        for(int i = 0; i < KNIGHT_MOVES_X.length; i++) {
+            int candidateX = this.x + KNIGHT_MOVES_X[i];
+            int candidateY = this.y + KNIGHT_MOVES_Y[i];
+            if(board.isValidCoordinate(candidateX, candidateY)){
+                final Square candidateDestinationSquare = board.getSquare(candidateX, candidateY);
+                if(!candidateDestinationSquare.isOccupied()) {
+                    legalMoves.add(new NormalMove(board, this, candidateX, candidateY));
+                } else {
+                    final Piece pieceAtLocation = candidateDestinationSquare.getPiece();
+                    final Utilities pieceUtility = pieceAtLocation.getPieceUtility();
+                    if(this.pieceUtilities != pieceUtility){
+                        legalMoves.add(new AttackingMove(board, this, candidateX, candidateY, pieceAtLocation));
                     }
-                 }
+                }
             }
         }
 
-        return legalMove;
+        return legalMoves;
     }
-    
+
     @Override
     public Knight movePiece(Moves move) {
         return new Knight(move.getXPosition(), move.getYPosition(), move.getMovedPiece().getPieceUtility());
     }
+
     @Override
     public String toString() {
         return PieceType.KNIGHT.toString();
     }
-
-
-    
-    
 }

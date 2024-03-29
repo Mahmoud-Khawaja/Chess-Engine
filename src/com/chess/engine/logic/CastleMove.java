@@ -5,7 +5,7 @@ import com.chess.engine.board.Builder;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.pieces.Rook;
 
-abstract class CastleMove extends Moves {
+public abstract class CastleMove extends Moves {
     protected final Rook castleRook;
     protected final int castleRookStartX;
     protected final int castleRookStartY;
@@ -30,7 +30,6 @@ abstract class CastleMove extends Moves {
     public boolean isCastlingMove(){
         return true;
     }
-    
     @Override
     public Board initiate(){
         final Builder builder = new Builder();

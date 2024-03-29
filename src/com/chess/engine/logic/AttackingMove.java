@@ -4,16 +4,16 @@ import com.chess.engine.board.Board;
 import  com.chess.engine.pieces.Piece;
 
 public final class AttackingMove extends Moves {
-    final Piece attakedPiece;
+    final Piece attackedPiece;
     public AttackingMove(Board board, Piece movedPiece, int x, int y, final Piece attakedPiece) {
         super(board, movedPiece, x, y);
-        this.attakedPiece = attakedPiece;
+        this.attackedPiece = attakedPiece;
     }
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((attakedPiece == null) ? 0 : attakedPiece.hashCode());
+        result = prime * result + ((attackedPiece == null) ? 0 : attackedPiece.hashCode());
         return result;
     }
     @Override
@@ -25,10 +25,10 @@ public final class AttackingMove extends Moves {
         if (getClass() != obj.getClass())
             return false;
         AttackingMove other = (AttackingMove) obj;
-        if (attakedPiece == null) {
-            if (other.attakedPiece != null)
+        if (attackedPiece == null) {
+            if (other.attackedPiece != null)
                 return false;
-        } else if (!attakedPiece.equals(other.attakedPiece))
+        } else if (!attackedPiece.equals(other.attackedPiece))
             return false;
         return true;
     }
@@ -42,7 +42,7 @@ public final class AttackingMove extends Moves {
     }
     @Override
     public Piece getAttackedPiece(){
-        return this.attakedPiece;
+        return this.attackedPiece;
     }
     
 }

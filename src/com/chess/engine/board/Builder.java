@@ -8,15 +8,15 @@ import java.util.Map.Entry;
 
 
 public class Builder {
-    Map<Entry<Integer,Integer>,Piece>boardcofig; 
+    Map<Entry<Integer,Integer>,Piece>boardConfig; 
     Utilities nextMove;
     Pawn enPassantPawn;
     public Builder(){
-        this.boardcofig = new HashMap<>();
+        this.boardConfig = new HashMap<>();
     }
 
     public Builder setPiece(final Piece piece){
-        this.boardcofig.put(Map.entry(piece.getXPosition(),piece.getYPosition()), piece);
+        this.boardConfig.put(Map.entry(piece.getXPosition(),piece.getYPosition()), piece);
         return this;
     }
     public Builder setNextMove(final Utilities nextMove){
@@ -26,8 +26,8 @@ public class Builder {
     public Board build(){
         return new Board(this);
     }
-
-    public void SetEnPassantPawn(Pawn enPassantPawn) {
-       this.enPassantPawn = enPassantPawn;
+    public void setEnPassantPawn(final Pawn enPassantPawn) {
+        this.enPassantPawn = enPassantPawn;
     }
+    
 }

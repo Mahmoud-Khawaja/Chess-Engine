@@ -1,10 +1,10 @@
 package com.chess.engine.board;
 import com.chess.engine.pieces.Piece;
 
-public final class emptySquare extends Square {
+public final class EmptySquare extends Square {
 
-    emptySquare(final int x, final int y) {
-        super(x,y);
+    EmptySquare(final int x, final int y) {
+        super(x, y);
     }
 
     @Override
@@ -19,7 +19,7 @@ public final class emptySquare extends Square {
 
     @Override
     public String toString() {
+        // Represents an empty square on the board
         return ".";
     }
-
 }

@@ -1,12 +1,12 @@
 package com.chess.engine.board;
-import  com.chess.engine.pieces.Piece;
+import com.chess.engine.pieces.Piece;
 
-public final class occupiedSquare extends Square {
+public final class OccupiedSquare extends Square {
 
     private final Piece piece;
 
-    occupiedSquare(final int x, final int y, Piece piece) {
-        super(x,y);
+    public OccupiedSquare(final int x, final int y, Piece piece) {
+        super(x, y);
         this.piece = piece;
     }
 
@@ -22,7 +22,8 @@ public final class occupiedSquare extends Square {
 
     @Override
     public String toString() {
+        // Returns the piece's string representation in lowercase if the piece is black,
+        // otherwise returns the piece's string representation as is.
         return getPiece().getPieceUtility().isBlack() ? getPiece().toString().toLowerCase() : getPiece().toString();
     }
-    
 }

@@ -9,69 +9,66 @@ import com.chess.engine.board.Square;
 import com.chess.engine.logic.AttackingMove;
 import com.chess.engine.logic.Moves;
 import com.chess.engine.logic.NormalMove;
-
 public class Pawn extends Piece {
 
     public Pawn(int x, int y, Utilities pieceUtilities) {
-        super(x, y, pieceUtilities,PieceType.PAWN);
+        super(x, y, pieceUtilities, PieceType.PAWN);
     }
 
-    private void calcuateAllDircestionsNormal(final Board board,final List<Moves> legalMove, int x, int y,int addX, int addY) {
-        if(board.isValidCoordiante(x+addX, y+addY)){
-            Square square = board.getSqaure(x+addX, y+addY);
+    private void calculateAllDirectionsNormal(final Board board, final List<Moves> legalMove, int x, int y, int addX) {
+        int newX = x + addX;
+        if(board.isValidCoordinate(newX, y)){
+            Square square = board.getSquare(newX, y);
             if(!square.isOccupied()){
-            legalMove.add(new NormalMove(board,this,x+addX,y+addY));
+                legalMove.add(new NormalMove(board, this, newX, y));
             }
         }
-        return;
     }
 
-    
-    private void calcuateAllDircestionsAttack(final Board board,final List<Moves> legalMove, int x, int y,int addX, int addY) {
-        if(board.isValidCoordiante(x+addX, y+addY)){
-            Square square = board.getSqaure(x+addX, y+addY);
+    private void calculateAllDirectionsAttack(final Board board, final List<Moves> legalMove, int x, int y, int addX, int addY) {
+        int newX = x + addX;
+        int newY = y + addY;
+        if(board.isValidCoordinate(newX, newY)){
+            Square square = board.getSquare(newX, newY);
             Piece pieceAtLocation = square.getPiece();
-            if(square.isOccupied()&& pieceAtLocation.pieceUtilities != this.pieceUtilities){
-            legalMove.add(new AttackingMove(board,this, x+addX, y+addY, pieceAtLocation));
+            if(square.isOccupied() && pieceAtLocation.getPieceUtility() != this.getPieceUtility()){
+                legalMove.add(new AttackingMove(board, this, newX, newY, pieceAtLocation));
+            }
         }
-    }
     }
 
     @Override
     public List<Moves> calculateMoves(final Board board) {
-        final List<Moves> legalMove = new ArrayList<>(); 
+        final List<Moves> legalMove = new ArrayList<>();
         int x = this.x;
         int y = this.y;
-        if(this.pieceUtilities.isWhite()){
-            if (x == 1) {
-                Square square = board.getSqaure(x+2, y);
-                if(!square.isOccupied()) legalMove.add(new NormalMove(board,this, x+2, y));
+        int pawnMoveDirection = this.getPieceUtility().isWhite() ? 1 : -1;
+        int pawnStartRow = this.getPieceUtility().isWhite() ? 1 : 6;
+
+        // Handle the initial double move
+        if (x == pawnStartRow) {
+            int twoStepForward = x + (2 * pawnMoveDirection);
+            Square squareTwoStep = board.getSquare(twoStepForward, y);
+            if(!squareTwoStep.isOccupied()) {
+                legalMove.add(new NormalMove(board, this, twoStepForward, y));
             }
-            calcuateAllDircestionsAttack(board, legalMove, x, y, 1, 1);
-            calcuateAllDircestionsAttack(board, legalMove, x, y, 1, -1);
-            calcuateAllDircestionsNormal(board, legalMove, x, y, 1, 0);
-        }else {
-            if (x == 6) {
-                Square square = board.getSqaure(x-2, y);
-                if(!square.isOccupied()) legalMove.add(new NormalMove(board,this, x-2, y));
-            }
-            calcuateAllDircestionsAttack(board, legalMove, x, y, -1, -1);
-            calcuateAllDircestionsAttack(board, legalMove, x, y, -1, 1);
-            calcuateAllDircestionsNormal(board, legalMove, x, y, -1, 0);
         }
+
+        // Handle normal and attack moves
+        calculateAllDirectionsNormal(board, legalMove, x, y, pawnMoveDirection);
+        calculateAllDirectionsAttack(board, legalMove, x, y, pawnMoveDirection, 1);
+        calculateAllDirectionsAttack(board, legalMove, x, y, pawnMoveDirection, -1);
+
         return legalMove;
     }
 
-    
     @Override
     public Pawn movePiece(Moves move) {
         return new Pawn(move.getXPosition(), move.getYPosition(), move.getMovedPiece().getPieceUtility());
     }
-    
+
     @Override
     public String toString() {
         return PieceType.PAWN.toString();
     }
-
-    
 }
