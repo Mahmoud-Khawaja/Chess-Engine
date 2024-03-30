@@ -122,45 +122,59 @@ public class Table {
             setPreferredSize(TILE_PANEL_DIMENSIONS);
             assingSquareColor();
             assingSquares(chessBoard);
-            addMouseListener(new MouseListener() {@Override
+            addMouseListener(new MouseListener() {
+                @Override
                 public void mouseClicked(final MouseEvent e) {
-                    if (SwingUtilities.isRightMouseButton(e)) {
-                        // Reset everything if the right mouse button is clicked
-                        source = null;
-                        destination = null;
-                        HumanMovedPiece = null;
-                    } else if (SwingUtilities.isLeftMouseButton(e)) {
-                        // If the left mouse button is clicked, proceed with the move
-                        if (source == null) {
-                            // First click: select the source square
-                            source = chessBoard.getSquare(sqaureX, sqaureY);
-                            HumanMovedPiece = source.getPiece();
-                            if (HumanMovedPiece == null) {
-                                source = null;
-                            }
-                        } else {
-                            // Second click: select the destination square and make the move
-                            destination = chessBoard.getSquare(sqaureX, sqaureY);
-                            final Moves move = Moves.FactoryClass.createMoves(chessBoard,
-                                    source.getSquareCoordinatesX(), source.getSquareCoordinatesY(),
-                                    destination.getSquareCoordinatesX(), destination.getSquareCoordinatesY());
-                            final Transition transition = chessBoard.currentPlayer().makeMove(move);
-                            if (transition.getMoveStatus().isDone()) {
-                                chessBoard = transition.getTransitionBoard();
-                                // Add this move to the move log if needed
-                            }
-                            // Reset the source, destination, and human moved piece for the next move
+                    try {
+                        if (SwingUtilities.isRightMouseButton(e)) {
+                            // Reset everything if the right mouse button is clicked
                             source = null;
                             destination = null;
                             HumanMovedPiece = null;
-                        }
-                        // Update the GUI after the move is made
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                boardPanel.drawBoard(chessBoard);
+                        } else if (SwingUtilities.isLeftMouseButton(e)) {
+                            // If the left mouse button is clicked, proceed with the move
+                            System.out.println("Left mouse button clicked.");
+                            if (source == null) {
+                                // First click: select the source square
+                                System.out.println("Selecting source square.");
+                                source = chessBoard.getSquare(sqaureX, sqaureY);
+                                HumanMovedPiece = source.getPiece();
+                                if (HumanMovedPiece == null) {
+                                    source = null;
+                                }
+                            } else {
+                                // Second click: select the destination square and make the move
+                                System.out.println("Selecting destination square.");
+                                destination = chessBoard.getSquare(sqaureX, sqaureY);
+                                final Moves move = Moves.FactoryClass.createMoves(chessBoard,
+                                        source.getSquareCoordinatesX(), source.getSquareCoordinatesY(),
+                                        destination.getSquareCoordinatesX(), destination.getSquareCoordinatesY());
+                                final Transition transition = chessBoard.currentPlayer().makeMove(move);
+                                System.out.println(source.getSquareCoordinatesX() + " " + source.getSquareCoordinatesY());
+                                System.out.println(destination.getSquareCoordinatesX() + " " + destination.getSquareCoordinatesY());
+                                if (transition.getMoveStatus().isDone()) {
+                                    System.out.println("Move successfully executed.");
+                                    chessBoard = transition.getTransitionBoard();
+                                    // Add this move to the move log if needed
+                                } else {
+                                    System.out.println(transition.getMoveStatus());
+                                    System.out.println("Move failed.");
+                                }
+                                // Reset the source, destination, and human moved piece for the next move
+                                source = null;
+                                destination = null;
+                                HumanMovedPiece = null;
                             }
-                        });
+                            // Update the GUI after the move is made
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    boardPanel.drawBoard(chessBoard);
+                                }
+                            });
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 }
                 @Override
