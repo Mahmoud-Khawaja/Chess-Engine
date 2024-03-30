@@ -112,7 +112,7 @@ public class Board {
             builder.setPiece(new Pawn(6, i, Utilities.BLACK));
         }
 
-        builder.setNextMove(Utilities.WHITE);
+        builder.setNextMove(Utilities.BLACK);
         return builder.build();
     }
 
